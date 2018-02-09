@@ -5,6 +5,7 @@ import * as BooksAPI from './api/BooksAPI';
 // import { BOOK_SHELF_CATEGORIES } from './constants/constants';
 import ListBooks from './components/ListBooks';
 import SearchBooks from './components/SearchBooks';
+import BookDetail from './components/BookDetail';
 
 import './App.css';
 
@@ -17,37 +18,27 @@ class App extends Component {
         currentlyReading: {
           name: 'Currently Reading',
           id: 'currentlyReading',
-          books: [],
         },
-        wantToRead: { name: 'Want To Read', id: 'wantToRead', books: [] },
-        read: { name: 'Read', id: 'read', books: [] },
+        wantToRead: { name: 'Want To Read', id: 'wantToRead' },
+        read: { name: 'Read', id: 'read' },
       },
       books: [],
       isLoading: true,
     };
 
+    this.fetchAllBooks = this.fetchAllBooks.bind(this);
     this.onChangeBookShelf = this.onChangeBookShelf.bind(this);
   }
 
   componentDidMount() {
-    BooksAPI.getAll().then(books => {
-      this.setState({ books, isLoading: false }, this.updateBookShelves);
-    });
+    this.fetchAllBooks();
   }
 
-  /* 
-    Map books into their respective shelf 
-    @method updateBookShelves
-  */
-  updateBookShelves = () => {
-    const { books, bookshelves } = this.state;
-
-    books.map(book => {
-      return bookshelves[book.shelf].books.push(book);
+  fetchAllBooks() {
+    BooksAPI.getAll().then(books => {
+      this.setState({ books, isLoading: false });
     });
-
-    this.setState({ bookshelves });
-  };
+  }
 
   /* 
     Add book to a shelf
@@ -56,15 +47,27 @@ class App extends Component {
     @param {object} shelf
   */
   onChangeBookShelf = (book, shelf) => {
-    BooksAPI.update(book, shelf).then(() => {
-      BooksAPI.getAll().then(books =>
-        this.setState({ books }, this.updateBookShelves)
-      );
+    BooksAPI.update(book, shelf).then(result => {
+      // TODO: Use `result` to update bookshelf with associative bookId's
+      // as result contains an object map with array of bookId's
+      // e.g:
+      // {
+      //    currentlyReading: ["evuwdDLfAyYC", "luD1Bpc1fmsC"],
+      //    wantToRead: Array(12),
+      //    read: Array(5)
+      //  }
+
+      BooksAPI.getAll().then(books => {
+        this.setState(prevState => ({
+          books: [...books],
+          isLoading: false,
+        }));
+      });
     });
   };
 
   render() {
-    const { bookshelves, isLoading } = this.state;
+    const { books, bookshelves, isLoading } = this.state;
 
     return (
       <div className="app">
@@ -72,10 +75,27 @@ class App extends Component {
           exact
           path="/"
           render={() => (
-            <ListBooks isLoading={isLoading} bookshelves={bookshelves} />
+            <ListBooks
+              isLoading={isLoading}
+              onChangeBookShelf={this.onChangeBookShelf}
+              bookshelves={bookshelves}
+              books={books}
+            />
           )}
         />
-        <Route path="/search" render={() => <SearchBooks />} />
+        <Route
+          path="/search"
+          render={() => (
+            <SearchBooks
+              myBooks={books}
+              onChangeBookShelf={this.onChangeBookShelf}
+            />
+          )}
+        />
+        <Route
+          path="/book/:id"
+          render={props => <BookDetail myBooks={books} {...props} />}
+        />
       </div>
     );
   }

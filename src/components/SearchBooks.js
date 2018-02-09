@@ -39,11 +39,11 @@ class SearchBooks extends Component {
       .then(result => {
         // If the result is not a 'catchable' error,
         // yet is undefined or contains the 'error' object
-        // mark it as an error here
+        // return it as an error here
         if (!result || result.error) {
           return this.handleError(result);
         }
-
+        // Otherwise store the search results
         this.setSearchResults(result);
       })
       .catch(error => this.handleError(error));
@@ -140,17 +140,16 @@ class SearchBooks extends Component {
   };
 
   render() {
-    const {
-      searchTerm,
-      searchKey,
-      // books, NB: not using this for now, use cache instead
-      cache,
-      error,
-      isLoading,
-    } = this.state;
-
+    const { searchTerm, searchKey, cache, error, isLoading } = this.state;
+    const { onChangeBookShelf, myBooks } = this.props;
     const booksList =
       (cache && cache[searchKey] && cache[searchKey].books) || [];
+
+    const bookShelf = book => {
+      const foundBook = myBooks.find(b => b.id === book.id);
+
+      return foundBook ? foundBook.shelf : 'none';
+    };
 
     booksList.sort(sortBy('title'));
 
@@ -185,7 +184,11 @@ class SearchBooks extends Component {
             {booksList &&
               booksList.map(book => (
                 <li key={book.id}>
-                  <Book book={book} />
+                  <Book
+                    book={book}
+                    shelf={bookShelf(book)}
+                    onChangeBookShelf={onChangeBookShelf}
+                  />
                 </li>
               ))}
           </ol>

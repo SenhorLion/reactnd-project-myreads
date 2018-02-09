@@ -6,8 +6,10 @@ import BookShelf from './BookShelf';
 
 class ListBooks extends Component {
   render() {
-    const { bookshelves, isLoading } = this.props;
+    const { onChangeBookShelf, books, bookshelves, isLoading } = this.props;
     const shelfKeys = Object.keys(bookshelves);
+
+    const booksForShelf = shelfId => books.filter(b => b.shelf === shelfId);
 
     return (
       <div className="list-books">
@@ -20,7 +22,12 @@ class ListBooks extends Component {
             ) : (
               shelfKeys &&
               shelfKeys.map(key => (
-                <BookShelf key={key} shelf={bookshelves[key]} />
+                <BookShelf
+                  onChangeBookShelf={onChangeBookShelf}
+                  key={key}
+                  shelf={bookshelves[key]}
+                  books={booksForShelf(key)}
+                />
               ))
             )}
           </div>
