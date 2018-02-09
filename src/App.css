@@ -180,6 +180,12 @@ body,
 .book {
   width: 140px;
 }
+.book-detail {
+  /* display: flex; */
+  width: 640px;
+  margin: 0 auto;
+}
+
 .book-title,
 .book-authors {
   font-size: 0.8em;
