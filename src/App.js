@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import * as BooksAPI from './api/BooksAPI';
 // import { BOOK_SHELF_CATEGORIES } from './constants/constants';
 import ListBooks from './components/ListBooks';
+import BookShelves from './components/BookShelves';
 import SearchBooks from './components/SearchBooks';
 import BookDetail from './components/BookDetail';
 
@@ -75,7 +76,7 @@ class App extends Component {
           exact
           path="/"
           render={() => (
-            <ListBooks
+            <BookShelves
               isLoading={isLoading}
               onChangeBookShelf={this.onChangeBookShelf}
               bookshelves={bookshelves}
@@ -92,10 +93,7 @@ class App extends Component {
             />
           )}
         />
-        <Route
-          path="/book/:id"
-          render={props => <BookDetail myBooks={books} {...props} />}
-        />
+        <Route path="/book/:id" render={props => <BookDetail {...props} />} />
       </div>
     );
   }

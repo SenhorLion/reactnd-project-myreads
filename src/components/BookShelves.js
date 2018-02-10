@@ -4,7 +4,7 @@ import Loader from './Loader';
 import Header from './Header';
 import BookShelf from './BookShelf';
 
-class ListBooks extends Component {
+class BookShelves extends Component {
   render() {
     const { onChangeBookShelf, books, bookshelves, isLoading } = this.props;
     const shelfKeys = Object.keys(bookshelves);
@@ -24,6 +24,7 @@ class ListBooks extends Component {
               shelfKeys.map(key => (
                 <BookShelf
                   onChangeBookShelf={onChangeBookShelf}
+                  isLoading={isLoading}
                   key={key}
                   shelf={bookshelves[key]}
                   books={booksForShelf(key)}
@@ -42,4 +43,4 @@ class ListBooks extends Component {
   }
 }
 
-export default ListBooks;
+export default BookShelves;
