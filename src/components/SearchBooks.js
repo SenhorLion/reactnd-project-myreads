@@ -35,6 +35,10 @@ class SearchBooks extends Component {
     @return {Promise}
   */
   fetchBookSearch = searchTerm => {
+    this.setState({
+      isLoading: true,
+    });
+
     return BooksAPI.search(searchTerm)
       .then(result => {
         // If the result is not a 'catchable' error,
@@ -114,10 +118,6 @@ class SearchBooks extends Component {
 
     // Only hit the API if searchTerm is not already cached
     if (this.searchTermNotCached(searchTerm)) {
-      this.setState(state => ({
-        isLoading: true,
-      }));
-
       this.fetchBookSearch(searchTerm);
     }
   };

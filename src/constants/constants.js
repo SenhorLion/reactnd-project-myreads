@@ -14,4 +14,4 @@ export const ERROR_MESSAGES = {
 };
 
 export const SEARCH_TERM_TITLE = 'Search term:';
-export const LOADING_MESSAGE = 'Loading';
+export const LOADING_MESSAGE = 'Loading...';
