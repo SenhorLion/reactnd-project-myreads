@@ -3,8 +3,6 @@ import { Route } from 'react-router-dom';
 import classNames from 'classnames';
 
 import * as BooksAPI from './api/BooksAPI';
-// import { BOOK_SHELF_CATEGORIES } from './constants/constants';
-import ListBooks from './components/ListBooks';
 import BookShelves from './components/BookShelves';
 import SearchBooks from './components/SearchBooks';
 import BookDetail from './components/BookDetail';
