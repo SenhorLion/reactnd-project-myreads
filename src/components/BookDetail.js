@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import * as BooksAPI from '../api/BooksAPI';
+import { BOOK_SHELF_CATEGORIES } from '../constants/constants';
 import Header from './Header';
 import Loader from './Loader';
 
@@ -16,19 +17,14 @@ class BookDetail extends Component {
     this.fetchBook(bookId);
   }
 
-  fetchBook(id) {
-    console.log('fetchBook', id);
-
-    BooksAPI.get(id).then(book => {
-      console.log('BooksAPI', book);
-
+  fetchBook(bookId) {
+    BooksAPI.get(bookId).then(book => {
       this.setState({ book, isLoading: false });
     });
   }
 
   render() {
     const { book, isLoading } = this.state;
-    const { myBooks } = this.props;
     const image = book && book.imageLinks ? book.imageLinks.thumbnail : '';
 
     return (
@@ -43,27 +39,33 @@ class BookDetail extends Component {
               <div
                 className="book-cover"
                 style={{
-                  width: 128,
-                  height: 193,
+                  width: 256,
+                  height: 386,
                   backgroundImage: 'url(' + image + ')',
                 }}
               />
 
-              <div className="book-title">{book.title}</div>
-              <div className="book-authors">
-                {book.authors && book.authors.join(', ')}
-              </div>
-              <div className="book-shelf">
-                {book.shelf && (
+              <div className="book-info">
+                <h2 className="book-title">{book.title}</h2>
+                {book.authors && (
                   <p>
-                    Belongs to <strong>{book.shelf}</strong>
+                    <strong>Author:</strong> {book.authors.join(', ')}
+                  </p>
+                )}
+                <p className="book-rating">
+                  <strong>Rating:</strong> {book.averageRating || '---'}
+                </p>
+                {book.shelf && (
+                  <p className="book-shelf">
+                    <strong>Shelf:</strong> {BOOK_SHELF_CATEGORIES[book.shelf]}
                   </p>
                 )}
               </div>
-              <div className="book-rating">{book.averageRating}</div>
             </div>
 
-            <div className="book-description">{book.description}</div>
+            <div className="book-description">
+              <p>{book.description}</p>
+            </div>
           </div>
         )}
       </div>
