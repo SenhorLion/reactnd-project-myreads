@@ -11,7 +11,7 @@ export const ERRORS = {
 
 export const ERROR_MESSAGES = {
   QUERY_NOT_FOUND: 'No results found for your search term',
-  SOMETHING_WRONG: 'Oops, Something went wrong, please try refreshing:',
+  SOMETHING_WRONG: 'Oops, Something went wrong, please try refreshing',
 };
 
 export const SEARCH_TERM_TITLE = 'Search term:';

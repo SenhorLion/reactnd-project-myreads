@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import * as BooksAPI from '../api/BooksAPI';
-import { BOOK_SHELF_CATEGORIES } from '../constants/constants';
+import { BOOK_SHELF_CATEGORIES, ERROR_MESSAGES } from '../constants/constants';
 import Header from './Header';
 import Loader from './Loader';
 
 class BookDetail extends Component {
   state = {
     book: null,
+    error: null,
     isLoading: true,
   };
 
@@ -17,14 +17,29 @@ class BookDetail extends Component {
     this.fetchBook(bookId);
   }
 
+  /* 
+    Fetch a book by id
+    - Makes a call to BooksAPI and stores returned book in state
+    - Catch any errors
+    @method fetchBook
+    @param {String} bookId
+  */
   fetchBook(bookId) {
-    BooksAPI.get(bookId).then(book => {
-      this.setState({ book, isLoading: false });
-    });
+    BooksAPI.get(bookId)
+      .then(book => {
+        this.setState({ book, isLoading: false });
+      })
+      .catch(error => {
+        debugger;
+        const errorMessage = `${ERROR_MESSAGES.SOMETHING_WRONG} - [Error: ${
+          error.message
+        }]`;
+        this.setState({ error: errorMessage, isLoading: false });
+      });
   }
 
   render() {
-    const { book, isLoading } = this.state;
+    const { book, isLoading, error } = this.state;
     const image = book && book.imageLinks ? book.imageLinks.thumbnail : '';
 
     return (
@@ -32,6 +47,12 @@ class BookDetail extends Component {
         <Header showLink={true} title="Book detail" />
 
         {isLoading && <Loader />}
+
+        {error && (
+          <div className="error-message">
+            <p>{error}</p>
+          </div>
+        )}
 
         {book && (
           <div className="book-detail">
