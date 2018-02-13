@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
 import * as BooksAPI from './api/BooksAPI';
-import { ERROR_MESSAGES, LOADING_MESSAGE } from './constants/constants';
+import { ERROR_MESSAGES } from './constants/constants';
 import BookShelves from './components/BookShelves';
 import SearchBooks from './components/SearchBooks';
 import BookDetail from './components/BookDetail';
@@ -36,6 +36,12 @@ class App extends Component {
     this.fetchAllBooks();
   }
 
+  /* 
+    Fetch all books
+    - Makes a call to BooksAPI and stores returned books in state
+    - Catches any error and stores error message in state
+    @method fetchAllBooks
+  */
   fetchAllBooks() {
     BooksAPI.getAll()
       .then(books => {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { UPDATING_MESSAGE } from '../constants/constants';
-import Loader from './Loader';
 import SelectShelf from './SelectShelf';
 
 class Book extends Component {
