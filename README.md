@@ -4,14 +4,16 @@ This is the source code for my final assessment project for Udacity's React Fund
 
 ### Project overview
 
-In this project, you will create a React application from scratch and utilize React components to manage the user interface. You’ll create a virtual bookcase to store your books and track what you're reading. Using the provided Books API, you’ll search for books and add them to a bookshelf as a React component. Finally, you’ll use React's setState to build the functionality to move books from one shelf to another.
+MyReads is a React application bootstrapped using [Create React App](https://github.com/facebookincubator/create-react-app).
+It represents a virtual bookcase to store books and track what you're reading. Using the provided Books API, you can search for books, limited to a fixed list of [SEARCH_TERMS.md](SEARCH_TERMS.md), and add them to a bookshelf.
+It uses React's setState to keep track of books moved from one shelf to another.
 
 ## TL;DR
 
-To get started developing right away:
+To view the finished project in a browser:
 
-* install all project dependencies with `npm install`
-* start the development server with `npm start`
+* install all project dependencies with `yarn install` or `npm install`
+* start the development server with `yarn start` or `npm start`
 
 ## Project structure
 
@@ -24,18 +26,27 @@ To get started developing right away:
 │   ├── favicon.ico # React Icon, You may change if you wish.
 │   └── index.html # DO NOT MODIFY
 └── src
-    ├── App.css # Styles for the app.
-    ├── App.js # This is the root of your app. The Entry point for all routes.
-    ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
     ├── api # Includes all api related modules:
     │   ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
     ├── components # All component modules:
-    │   ├── Header.js # The Header, can be re-used and tailored per view.
-    │   ├── ListBooks.js # Contains the main bookshelves for the app.
+    │   ├── Book.js # Renders book data.
+    │   ├── BookDetail.js # Renders book detail data.
+    │   ├── BookShelf.js # Renders book shelf data.
+    │   ├── BookShelves.js # Renders list of book shelf data.
+    │   ├── Header.js # Reusable header component can be tailored per view.
+    │   ├── Loader.js # Loader to give feedback to user per API action.
+    │   ├── SearchBooks.js # Renders search book list.
+    │   ├── SearchInput.js # Renders input form to capture searchterms.
+    │   ├── SelectShelf.js # Select component - Displays book shelf category options and handles shelf selection.
+    ├── constants # All constants:
+    │   ├── constants.js # Store string copy and messages as constants.
     ├── icons # Helpful images for your app. Use at your discretion.
     │   ├── add.svg
     │   ├── arrow-back.svg
     │   └── arrow-drop-down.svg
+    ├── App.css # Styles for the app.
+    ├── App.js # This is the root of your app. The Entry point for all routes.
+    ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
     ├── index.css # Global styles. You probably won't need to change anything here.
     └── index.js # You should not need to modify this file. It is used for DOM rendering only.
 ```
