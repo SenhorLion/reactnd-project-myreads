@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { LOADING_MESSAGE } from '../constants/constants';
-
 class SelectShelf extends Component {
   render() {
     const { shelf, book, onChange } = this.props;
