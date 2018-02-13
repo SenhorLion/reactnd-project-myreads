@@ -30,7 +30,6 @@ class BookDetail extends Component {
         this.setState({ book, isLoading: false });
       })
       .catch(error => {
-        debugger;
         const errorMessage = `${ERROR_MESSAGES.SOMETHING_WRONG} - [Error: ${
           error.message
         }]`;
