@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import { UPDATING_MESSAGE } from '../constants/constants';
+import Loader from './Loader';
 import SelectShelf from './SelectShelf';
 
 class Book extends Component {
   render() {
-    const { book, shelf, onChangeBookShelf } = this.props;
+    const { book, shelf, updatingBookId, onChangeBookShelf } = this.props;
+
     const thumbnail = book.imageLinks ? book.imageLinks.thumbnail : '';
 
     return (
       <div className="book">
+        {updatingBookId === book.id && (
+          <div className="book-loader-bg">
+            <div className="book-loader">
+              <i className="fas fa-spinner fa-2x" />
+              <p className="book-loader__message">{UPDATING_MESSAGE}</p>
+            </div>
+          </div>
+        )}
         <div className="book-top">
           <Link to={`/book/${book.id}`}>
             <div
@@ -33,7 +43,6 @@ class Book extends Component {
         <div className="book-authors">
           {book.authors && book.authors.join(', ')}
         </div>
-        <div className="book-shelf">{shelf}</div>
       </div>
     );
   }
