@@ -16,7 +16,6 @@ class SearchBooks extends Component {
     this.state = {
       searchTerm: '',
       searchKey: '',
-      books: null,
       cache: [],
       isLoading: false,
       error: null,
@@ -83,7 +82,6 @@ class SearchBooks extends Component {
 
     this.setState({
       cache: { ...cache, [searchKey]: { books: updatedCache } },
-      books,
       error: null,
       isLoading: false,
     });
@@ -143,7 +141,7 @@ class SearchBooks extends Component {
 
   render() {
     const { searchTerm, searchKey, cache, error, isLoading } = this.state;
-    const { onChangeBookShelf, myBooks } = this.props;
+    const { onChangeBookShelf, myBooks, updatingBookId } = this.props;
     const booksList =
       (cache && cache[searchKey] && cache[searchKey].books) || [];
 
@@ -187,6 +185,7 @@ class SearchBooks extends Component {
               booksList.map(book => (
                 <li key={book.id}>
                   <Book
+                    updatingBookId={updatingBookId}
                     book={book}
                     shelf={bookShelf(book)}
                     onChangeBookShelf={onChangeBookShelf}

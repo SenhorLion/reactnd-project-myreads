@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import classNames from 'classnames';
 
 import * as BooksAPI from './api/BooksAPI';
 import { ERROR_MESSAGES, LOADING_MESSAGE } from './constants/constants';
@@ -25,6 +24,7 @@ class App extends Component {
       },
       books: [],
       isLoading: true,
+      updatingBookId: null,
       error: null,
     };
 
@@ -56,27 +56,28 @@ class App extends Component {
     @param {object} shelf
   */
   onChangeBookShelf = (book, shelf) => {
+    this.setState({ updatingBookId: book.id });
+
     BooksAPI.update(book, shelf).then(result => {
-      // TODO: Use `result` to update bookshelf with associative bookId's
-      // as result contains an object map with array of bookId's
+      // TODO: Use `result` to update bookshelf with bookId's
+      // as `result` contains an object map with an array of bookId's
       // e.g:
       // {
       //    currentlyReading: ["evuwdDLfAyYC", "luD1Bpc1fmsC"],
       //    wantToRead: Array(12),
       //    read: Array(5)
       //  }
-
       BooksAPI.getAll().then(books => {
-        this.setState(prevState => ({
+        this.setState({
           books: [...books],
-          isLoading: false,
-        }));
+          updatingBookId: null,
+        });
       });
     });
   };
 
   render() {
-    const { books, bookshelves, isLoading } = this.state;
+    const { books, bookshelves, isLoading, error, updatingBookId } = this.state;
 
     return (
       <div className="app">
@@ -85,6 +86,8 @@ class App extends Component {
           path="/"
           render={() => (
             <BookShelves
+              error={error}
+              updatingBookId={updatingBookId}
               isLoading={isLoading}
               onChangeBookShelf={this.onChangeBookShelf}
               bookshelves={bookshelves}
@@ -96,6 +99,8 @@ class App extends Component {
           path="/search"
           render={() => (
             <SearchBooks
+              updatingBookId={updatingBookId}
+              isLoading={isLoading}
               myBooks={books}
               onChangeBookShelf={this.onChangeBookShelf}
             />
