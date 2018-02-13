@@ -31,20 +31,83 @@ body,
   position: absolute;
   left: 50%;
   top: 50%;
+  margin-top: -50px;
   text-align: center;
+  color: #333333;
+  z-index: 11;
 }
 .loader p {
   margin: 12px 0;
 }
+.loader-overlay {
+  position: absolute;
+  display: block;
+  color: #fff;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 10;
+}
+.loading-message {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  text-align: center;
+}
+.visible {
+  display: block;
+}
 
 .error-message {
+  position: absolute;
+  top: 50%;
   width: 100%;
-  text-align: center;
+  height: 100%;
   color: #ee0000;
+  text-align: center;
+}
+
+.button {
+  background-color: #dedede;
+  border: 0;
+  border-radius: 6px;
+  color: #fff;
+  display: inline-block;
+  line-height: inherit;
+  padding: 1.5em;
+  margin: 2px;
+  text-align: center;
+  vertical-align: bottom;
+}
+.button:hover {
+  background-color: #666;
+  outline: 0;
+  cursor: pointer;
+}
+.button:focus {
+  outline: 0;
+}
+
+.button--reset {
+  color: #333333;
+  background-color: #e7e7e7;
+}
+.button--reset:hover {
+  background-color: #dadada;
+}
+
+.button--search {
+  background-color: #2e7c31;
+}
+.button--search:hover {
+  background-color: #427d45;
+  outline: 0;
+  cursor: pointer;
 }
 
 /* main page */
-
 .list-books-title {
   padding: 10px 0;
   background: #2e7c31;
@@ -65,6 +128,29 @@ body,
   padding: 0 10px 20px;
 }
 
+.book-loader-bg {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  color: rgb(0, 0, 0);
+  margin-left: -8px;
+  margin-right: 20px;
+  width: 152px;
+  height: 308px;
+  z-index: 2;
+}
+.book-loader {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  vertical-align: center;
+  flex-direction: column;
+  flex: 1;
+  margin-top: 60px;
+}
+.book-loader__message {
+  line-height: 0.75em;
+}
+
 @media (min-width: 600px) {
   .bookshelf {
     padding: 0 20px 40px;
@@ -82,6 +168,7 @@ body,
   position: fixed;
   right: 25px;
   bottom: 25px;
+  z-index: 2;
 }
 .open-search a {
   display: block;
@@ -108,7 +195,7 @@ body,
 }
 .search-books-input-wrapper {
   flex: 1;
-  background: #e9e;
+  background: #fff;
 }
 .search-books-bar input {
   width: 100%;
@@ -151,14 +238,8 @@ body,
 .search-books-form {
   display: flex;
 }
-.search-button {
-  background: #60ac5d;
-  border: 0;
-}
 
 .reset-query {
-  align-self: center;
-  color: #cccccc;
   padding: 10px;
 }
 
@@ -276,10 +357,4 @@ body,
 .link-back {
   color: white;
   padding: 12px;
-}
-
-/* TODO: Add better button styles */
-.button {
-  border: 0;
-  background: #999999;
 }
