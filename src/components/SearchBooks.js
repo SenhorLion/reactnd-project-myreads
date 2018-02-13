@@ -64,7 +64,9 @@ class SearchBooks extends Component {
     if (error === undefined || error.error) {
       errorMessage = ERROR_MESSAGES.QUERY_NOT_FOUND;
     } else {
-      errorMessage = error;
+      errorMessage = `${ERROR_MESSAGES.SOMETHING_WRONG} Error: ${
+        error.message
+      }`;
     }
     this.setState({ error: errorMessage, isLoading: false });
   };

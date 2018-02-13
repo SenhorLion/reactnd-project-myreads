@@ -25,6 +25,7 @@ class App extends Component {
       },
       books: [],
       isLoading: true,
+      error: null,
     };
 
     this.fetchAllBooks = this.fetchAllBooks.bind(this);
@@ -36,9 +37,16 @@ class App extends Component {
   }
 
   fetchAllBooks() {
-    BooksAPI.getAll().then(books => {
-      this.setState({ books, isLoading: false });
-    });
+    BooksAPI.getAll()
+      .then(books => {
+        this.setState({ books, isLoading: false });
+      })
+      .catch(error => {
+        const errorMessage = `${ERROR_MESSAGES.SOMETHING_WRONG} Error: ${
+          error.message
+        }`;
+        this.setState({ error: errorMessage, isLoading: false });
+      });
   }
 
   /* 
