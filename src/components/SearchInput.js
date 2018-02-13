@@ -27,15 +27,15 @@ class SearchInput extends Component {
                 value={searchTerm}
                 onChange={event => onChange(event.target.value)}
               />
-              <button className="search-button" type="submit">
+              <button className="button button--search" type="submit">
                 Search
               </button>
               <button
-                className="reset-button reset-query"
+                className="button button--reset"
                 type="reset"
                 onClick={onReset}
               >
-                Reset <i className="far fa-times-circle fa-2x" />
+                Reset
               </button>
             </form>
           </div>
