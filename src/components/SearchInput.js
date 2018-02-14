@@ -27,7 +27,7 @@ class SearchInput extends Component {
                 value={searchTerm}
                 onChange={event => onChange(event.target.value)}
               />
-              <button className="button button--search" type="submit">
+              <button className="button button--primary" type="submit">
                 Search
               </button>
               <button

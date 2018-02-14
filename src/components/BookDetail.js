@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import * as BooksAPI from '../api/BooksAPI';
 import { BOOK_SHELF_CATEGORIES, ERROR_MESSAGES } from '../constants/constants';
 import Header from './Header';
@@ -40,7 +41,6 @@ class BookDetail extends Component {
   render() {
     const { book, isLoading, error } = this.state;
     const image = book && book.imageLinks ? book.imageLinks.thumbnail : '';
-
     return (
       <div className="book-details">
         <Header showLink={true} title="Book detail" />
@@ -72,12 +72,24 @@ class BookDetail extends Component {
                     <strong>Author:</strong> {book.authors.join(', ')}
                   </p>
                 )}
+                <p className="book-publisher">
+                  <strong>Publisher:</strong> {book.publisher}
+                </p>
                 <p className="book-rating">
                   <strong>Rating:</strong> {book.averageRating || '---'}
                 </p>
                 {book.shelf && (
                   <p className="book-shelf">
                     <strong>Shelf:</strong> {BOOK_SHELF_CATEGORIES[book.shelf]}
+                  </p>
+                )}
+                {book.previewLink && (
+                  <p className="book-link">
+                    <a href={book.previewLink} target="blank">
+                      <button className="button button--primary">
+                        Preview
+                      </button>
+                    </a>
                   </p>
                 )}
               </div>
