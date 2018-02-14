@@ -9,6 +9,8 @@ import Header from './Header';
 import Book from './Book';
 import SearchInput from './SearchInput';
 
+const PAUSE_INTERVAL = 800;
+
 class SearchBooks extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +22,7 @@ class SearchBooks extends Component {
       isLoading: false,
       error: null,
     };
+    this.timerId = null;
 
     // Bind prop methods to 'this'
     this.onSearchReset = this.onSearchReset.bind(this);
@@ -105,7 +108,15 @@ class SearchBooks extends Component {
     @param {Event} event
   */
   onSearchSubmit = event => {
-    event.preventDefault();
+    console.log('onSearchSubmit');
+
+    // clear any exisiting timer,
+    // to prevent a double hit
+    clearTimeout(this.timerId);
+
+    if (event) {
+      event.preventDefault();
+    }
 
     const { searchTerm } = this.state;
 
@@ -128,7 +139,14 @@ class SearchBooks extends Component {
     @param {String} searchTerm
   */
   onSearchChange = searchTerm => {
+    // Clear any existing timer first
+    clearTimeout(this.timerId);
+
     this.setState({ searchTerm: searchTerm.trim() });
+
+    // Kickoff search after a pause interval
+    // to wait for user to stop typing
+    this.timerId = setTimeout(this.onSearchSubmit, PAUSE_INTERVAL);
   };
 
   /*
