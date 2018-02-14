@@ -108,8 +108,6 @@ class SearchBooks extends Component {
     @param {Event} event
   */
   onSearchSubmit = event => {
-    console.log('onSearchSubmit');
-
     // clear any exisiting timer,
     // to prevent a double hit
     clearTimeout(this.timerId);

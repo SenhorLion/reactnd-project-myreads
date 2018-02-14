@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import * as BooksAPI from '../api/BooksAPI';
 import { BOOK_SHELF_CATEGORIES, ERROR_MESSAGES } from '../constants/constants';
 import Header from './Header';
