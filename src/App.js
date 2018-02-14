@@ -62,24 +62,18 @@ class App extends Component {
     @param {object} shelf
   */
   onChangeBookShelf = (book, shelf) => {
-    this.setState({ updatingBookId: book.id });
+    if (book.shelf !== shelf) {
+      // show updating loader
+      this.setState({ updatingBookId: book.id });
 
-    BooksAPI.update(book, shelf).then(result => {
-      // TODO: Use `result` to update bookshelf with bookId's
-      // as `result` contains an object map with an array of bookId's
-      // e.g:
-      // {
-      //    currentlyReading: ["evuwdDLfAyYC", "luD1Bpc1fmsC"],
-      //    wantToRead: Array(12),
-      //    read: Array(5)
-      //  }
-      BooksAPI.getAll().then(books => {
-        this.setState({
-          books: [...books],
+      BooksAPI.update(book, shelf).then(() => {
+        book.shelf = shelf;
+        this.setState(state => ({
+          books: state.books.filter(b => b.id !== book.id).concat([book]),
           updatingBookId: null,
-        });
+        }));
       });
-    });
+    }
   };
 
   render() {
